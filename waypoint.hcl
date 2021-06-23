@@ -1,21 +1,29 @@
 project = "wp-react-example"
 
+runner {
+  enabled = true
+
+  data_source "git" {
+    url = "https://github.com/krantzinator/wp-react-example"
+    ref = "HEAD"
+  }
+
+  poll {
+    enabled  = true
+    interval = "10s"
+  }
+}
+
 app "example-reactjs" {
   build {
     use "docker" {}
-    registry {
-      use "aws-ecr" {
-        region     = "us-west-1"
-        repository = "waypoint-example"
-        tag        = "latest"
-      }
-    }
   }
 
   deploy {
-    use "aws-ecs" {
-      region = "us-east-1"
-      memory = "512"
-    }
+    use "docker" {}
   }
+}
+
+variable "hello" {
+  default = "other"
 }
